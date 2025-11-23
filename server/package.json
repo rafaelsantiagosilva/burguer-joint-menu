@@ -8,6 +8,10 @@
 		"start:dev": "tsx watch src/server.ts",
 		"start": "node dist/server.js",
 		"build": "tsc",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"test:ui": "vitest --ui",
 		"db:migrate": "drizzle-kit migrate",
 		"db:generate": "drizzle-kit generate",
 		"db:studio": "drizzle-kit studio"
@@ -26,7 +30,8 @@
 		"@types/swagger-ui-express": "^4.1.8",
 		"drizzle-kit": "^0.31.7",
 		"tsx": "^4.20.6",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.13"
 	},
 	"dependencies": {
 		"body-parser": "^2.2.0",
