@@ -1,0 +1,43 @@
+{
+	"name": "burguer-joint-menu-server",
+	"version": "1.0.0",
+	"description": "Backend server for the application",
+	"main": "server.js",
+	"type": "module",
+	"scripts": {
+		"start:dev": "tsx watch src/server.ts",
+		"start": "node dist/server.js",
+		"build": "tsc",
+		"db:migrate": "drizzle-kit migrate",
+		"db:generate": "drizzle-kit generate",
+		"db:studio": "drizzle-kit studio"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.19.0",
+	"devDependencies": {
+		"@types/body-parser": "^1.19.6",
+		"@types/cors": "^2.8.19",
+		"@types/express": "^5.0.5",
+		"@types/node": "^24.10.1",
+		"@types/pg": "^8.15.6",
+		"@types/swagger-jsdoc": "^6.0.4",
+		"@types/swagger-ui-express": "^4.1.8",
+		"drizzle-kit": "^0.31.7",
+		"tsx": "^4.20.6",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"body-parser": "^2.2.0",
+		"cors": "^2.8.5",
+		"dotenv": "^17.2.3",
+		"drizzle-orm": "^0.44.7",
+		"express": "^5.1.0",
+		"http-status-codes": "^2.3.0",
+		"pg": "^8.16.3",
+		"swagger-jsdoc": "^6.2.8",
+		"swagger-ui-express": "^5.0.1",
+		"zod": "^4.1.12"
+	}
+}
