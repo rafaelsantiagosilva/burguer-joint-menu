@@ -1,0 +1,34 @@
+import { env } from "@/env.ts";
+import type { AppError } from "@/errors/AppError.ts";
+import type { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { ZodError } from "zod";
+
+export function errorHandler(
+  error: AppError,
+  Request: Request,
+  res: Response,
+  next: NextFunction) {
+  if (env.ENV === "dev") {
+    console.info("> ❌ Error handler:");
+    console.error(error);
+    console.log("\n");
+  }
+
+  if (error instanceof ZodError) {
+    const { issues } = error;
+
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({
+        error: "Validation Error",
+        issues
+      });
+  }
+
+  return res
+    .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+    .json({
+      message: error.message || "Internal Server Error",
+    });
+} 
