@@ -1,0 +1,8 @@
+import type { User } from "@/models/user.ts";
+
+export default interface IUsersRepository {
+  findById(id: string): Promise<User | null>;
+  findByEmail(email: string): Promise<User | null>;
+  register(email: string, password: string, isAdmin: boolean): Promise<User>;
+  addAddressAndName(id: string, address: string, name: string): Promise<void>;
+}
