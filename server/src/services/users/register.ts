@@ -12,7 +12,7 @@ export class RegisterUserService {
     if (user)
       throw new UserAlreadyExistsError();
 
-    return await this.usersRepository.register(
+    return await this.usersRepository.create(
       email,
       await hashPassword(password),
       false
