@@ -14,7 +14,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
     return user;
   }
 
-  async register(email: string, password: string, isAdmin: boolean): Promise<User> {
+  async create(email: string, password: string, isAdmin: boolean): Promise<User> {
     const newUser: User = {
       id: crypto.randomUUID(),
       name: null,
