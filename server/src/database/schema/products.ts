@@ -7,5 +7,5 @@ export const products = table("products", {
   description: t.text(),
   price: t.integer().notNull(),
   imagePath: t.text("image_path"),
-  isAvaliable: t.boolean("is_avaliable").default(true),
+  isAvaliable: t.boolean("is_avaliable").default(true).notNull(),
 });
