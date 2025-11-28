@@ -13,12 +13,12 @@ describe("Register User Service", () => {
   });
 
   it("should to be able register a new user", async () => {
-    const user = await sut.execute("test@email.com", "123456");
+    const user = await sut.execute({ email: "test@email.com", password: "123456" });
     expect(user.id).toBeTruthy();
   });
 
   it("should hash user password upon registration", async () => {
-    const user = await sut.execute("test@email.com", "123456");
+    const user = await sut.execute({ email: "test@email.com", password: "123456" });
     expect(user.password).not.toBe("123456");
 
     const passwordMatch = await comparePassword("123456", user.password);
@@ -28,9 +28,9 @@ describe("Register User Service", () => {
   it("shouldn't to be able register a new user with same email", async () => {
     const email = "test@email.com";
 
-    await sut.execute(email, "123456");
+    await sut.execute({ email, password: "123456" });
     await expect(() =>
-      sut.execute(email, "123456")
+      sut.execute({ email, password: "123456" })
     ).rejects.toBeInstanceOf(Error);
   });
 });

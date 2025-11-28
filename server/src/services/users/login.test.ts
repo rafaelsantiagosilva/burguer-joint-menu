@@ -18,7 +18,7 @@ describe("Login User Service", () => {
     const password = "123456";
 
     const createdUser = await usersRepository.create(email, password, false);
-    const loggedUser = await sut.execute(email, password);
+    const loggedUser = await sut.execute({ email, password });
 
     expect(loggedUser).toEqual(createdUser);
   });
@@ -31,7 +31,7 @@ describe("Login User Service", () => {
     await usersRepository.create(email, password, false);
 
     await expect(() =>
-      sut.execute(wrongEmail, password)
+      sut.execute({ email: wrongEmail, password })
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
@@ -43,7 +43,7 @@ describe("Login User Service", () => {
     await usersRepository.create(email, password, false);
 
     await expect(() =>
-      sut.execute(email, wrongPassword)
+      sut.execute({ email, password: wrongPassword })
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 });

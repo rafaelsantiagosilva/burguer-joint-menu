@@ -3,10 +3,17 @@ import type { User } from "@/models/user.ts";
 import type IUsersRepository from "@/repositories/IUsersRepository.ts";
 import { hashPassword } from "@/utils/password-hash.ts";
 
+type RegisterUserRequest = {
+  email: string;
+  password: string;
+}
+
+type RegisterUserResponse = User;
+
 export class RegisterUserService {
   constructor(private usersRepository: IUsersRepository) { }
 
-  async execute(email: string, password: string): Promise<User> {
+  async execute({ email, password }: RegisterUserRequest): Promise<RegisterUserResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (user)

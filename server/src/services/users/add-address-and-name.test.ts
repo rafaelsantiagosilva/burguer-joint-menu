@@ -14,7 +14,7 @@ describe("Add Address And Name User Service", () => {
 
   it("should be able to add address and name to an user", async () => {
     const user = await usersRepository.create("test@email.com", "123456", false);
-    await sut.execute(user.id, "123 Main St", "John Doe");
+    await sut.execute({ userId: user.id, address: "123 Main St", name: "John Doe" });
 
     const updatedUser = await usersRepository.findById(user.id);
 
