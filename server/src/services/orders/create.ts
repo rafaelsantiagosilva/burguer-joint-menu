@@ -4,6 +4,7 @@ import { NotAvaliableProductError } from "@/errors/NotAvaliableProductError.ts";
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { WithoutProductsError } from "@/errors/WithoutProductsError.ts";
 import type { Order } from "@/models/order.ts";
+import type { Product } from "@/models/product.ts";
 import type IOrdersRepository from "@/repositories/IOrdersRepository.ts";
 import type IProductsRepository from "@/repositories/IProductsRepository.ts";
 import type IUsersRepository from "@/repositories/IUsersRepository.ts";
@@ -33,7 +34,7 @@ export class CreateOrderService {
 
     const productsIds = items.map(i => i.productId);
     const products = await this.productsRepository.fetchManyByIds(productsIds);
-    const productsMap = new Map(products.map(p => [p.id, p]));
+    const productsMap = new Map<string, Product>(products.map(p => [p.id, p]));
 
     for (const item of items) {
       const product = productsMap.get(item.productId);
