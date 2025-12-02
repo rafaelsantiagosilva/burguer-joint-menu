@@ -43,4 +43,8 @@ export class InMemoryProductsRepository implements IProductsRepository {
     if (productIndex >= 0)
       this.products[productIndex]!.isAvaliable = isAvailable;
   }
+
+  async delete(id: string): Promise<void> {
+    this.products = this.products.filter((product) => product.id !== id);
+  }
 }
