@@ -6,7 +6,7 @@ import { z } from "zod";
 import { db } from "./database/index.ts";
 import { users } from "./database/schema/users.ts";
 import { swaggerSpec } from "./swagger.ts";
-import { errorHandler } from "./middlewares/error-handler.ts";
+import { errorHandler } from "./api/middlewares/error-handler.ts";
 
 const app: Express = express();
 
