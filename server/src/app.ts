@@ -2,11 +2,9 @@ import cors from "cors";
 import type { Express } from "express";
 import express from "express";
 import swaggerUi from "swagger-ui-express";
-import { z } from "zod";
-import { db } from "./database/index.ts";
-import { users } from "./database/schema/users.ts";
-import { swaggerSpec } from "./swagger.ts";
 import { errorHandler } from "./api/middlewares/error-handler.ts";
+import { registerRouters } from "./api/routers/index.ts";
+import { swaggerSpec } from "./swagger.ts";
 
 const app: Express = express();
 
@@ -39,17 +37,7 @@ app.get("/ping", (_, res) => {
   res.json({ message: "pong" });
 });
 
-const registerSchema = z.object({
-  email: z.email(),
-  password: z.string(),
-})
-
-app.post("/users/register", async (req, res) => {
-  const { email, password } = registerSchema.parse(req.body);
-  await db.insert(users).values({ name: null, email, password, address: null });
-  console.log("> User registered:", email);
-  res.status(201).json({ message: "User created successfully" });
-});
+registerRouters(app);
 
 app.use(errorHandler);
 
