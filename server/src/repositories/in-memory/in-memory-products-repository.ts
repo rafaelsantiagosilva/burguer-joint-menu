@@ -1,7 +1,5 @@
 import type { Product } from "@/models/product.ts";
 import type IProductsRepository from "../IProductsRepository.ts";
-import { db } from "@/database/index.ts";
-import { products } from "@/database/schema/products.ts";
 
 export class InMemoryProductsRepository implements IProductsRepository {
   public products: Product[] = [];
