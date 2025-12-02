@@ -32,6 +32,13 @@ export class InMemoryProductsRepository implements IProductsRepository {
     return newProduct;
   }
 
+  async update(product: Product): Promise<void> {
+    const productIndex = this.products.findIndex((p) => p.id === product.id);
+
+    if (productIndex >= 0)
+      this.products[productIndex] = product;
+  }
+
   async isAvailable(productId: string): Promise<boolean> {
     const product = this.products.find((product) => product.id === productId);
     return product?.isAvaliable ?? false;
