@@ -31,13 +31,25 @@ describe("Fetch Order By User Id Service", () => {
       newOrders.push(order);
     }
 
-    const orders = await sut.execute({ userId: existingUserId });
+    const orders = await sut.execute({ userId: existingUserId, page: 1 });
     expect(orders).toEqual(newOrders);
+  });
+
+  it("should be able to fetch orders by user id with pagination", async () => {
+    const newOrders = [];
+
+    for (let i = 0; i < 12; i++) {
+      const order = await ordersRepository.create(existingUserId, []);
+      newOrders.push(order);
+    }
+
+    const orders = await sut.execute({ userId: existingUserId, page: 2 });
+    expect(orders).toHaveLength(2);
   });
 
   it("should not be able to fetch orders for a non-existing user", async () => {
     await expect(async () =>
-      await sut.execute({ userId: "non-existing-user" })
+      await sut.execute({ userId: "non-existing-user", page: 1 })
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

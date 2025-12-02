@@ -1,5 +1,6 @@
 import type { Order, OrderStatus } from "@/models/order.ts";
 import type { OrderProduct } from "@/models/order_products.ts";
+import { paginate } from "@/utils/paginate.ts";
 import type IOrdersRepository from "../IOrdersRepository.ts";
 
 export class InMemoryOrdersRepository implements IOrdersRepository {
@@ -16,8 +17,9 @@ export class InMemoryOrdersRepository implements IOrdersRepository {
     return this.orders;
   }
 
-  async fetchByUserId(userId: string): Promise<Order[]> {
-    return this.orders.filter((order) => order.userId === userId);
+  async fetchByUserId(userId: string, page: number): Promise<Order[]> {
+    const orders = this.orders.filter((order) => order.userId === userId);
+    return paginate(orders, page);
   }
 
   async create(userId: string, items: Array<{ productId: string; productPrice: number; quantity: number; }>): Promise<Order> {

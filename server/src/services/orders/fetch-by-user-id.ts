@@ -5,6 +5,7 @@ import type IUsersRepository from "@/repositories/IUsersRepository.ts";
 
 type FetchOrdersByUserIdRequest = {
   userId: string;
+  page: number;
 };
 
 type FetchOrdersByUserIdResponse = Order[];
@@ -15,13 +16,13 @@ export class FetchOrdersByUserIdService {
     private usersRepository: IUsersRepository
   ) { }
 
-  async execute({ userId }: FetchOrdersByUserIdRequest): Promise<FetchOrdersByUserIdResponse> {
+  async execute({ userId, page }: FetchOrdersByUserIdRequest): Promise<FetchOrdersByUserIdResponse> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user)
       throw new ResourceNotFoundError();
 
-    const userOrders = await this.ordersRepository.fetchByUserId(userId);
+    const userOrders = await this.ordersRepository.fetchByUserId(userId, page);
     return userOrders;
   }
 }
