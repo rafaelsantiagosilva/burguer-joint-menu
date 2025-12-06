@@ -14,7 +14,7 @@ describe("Get User Profile Service", () => {
   });
 
   it("should be able to get user profile", async () => {
-    const user = await usersRepository.create("test@email.com", "123456", false);
+    const user = await usersRepository.create("(01) X2345-6789", "123456", false);
     const userProfile = await sut.execute({ userId: user.id });
 
     expect(userProfile).toEqual(user);

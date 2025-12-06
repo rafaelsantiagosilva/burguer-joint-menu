@@ -15,7 +15,7 @@ describe("Update User Profile Service", () => {
 
   it("should be able to update an user profile", async () => {
     const data = await usersRepository.create(
-      "test@email.com",
+      "(01) X2345-6789",
       "123456",
       false
     );
@@ -36,7 +36,7 @@ describe("Update User Profile Service", () => {
         id: "invalid-id",
         name: "John Doe",
         address: "123 Main St",
-        email: "test@email.com",
+        phone: "(01) X2345-6789",
         password: "123456",
         isAdmin: false
       })

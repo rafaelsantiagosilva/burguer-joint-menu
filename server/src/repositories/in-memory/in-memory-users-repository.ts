@@ -9,16 +9,16 @@ export class InMemoryUsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    const user = this.users.find((user) => user.email === email) || null;
+  async findByPhone(phone: string): Promise<User | null> {
+    const user = this.users.find((user) => user.phone === phone) || null;
     return user;
   }
 
-  async create(email: string, password: string, isAdmin: boolean): Promise<User> {
+  async create(phone: string, password: string, isAdmin: boolean): Promise<User> {
     const newUser: User = {
       id: crypto.randomUUID(),
       name: null,
-      email,
+      phone,
       password,
       address: null,
       isAdmin,

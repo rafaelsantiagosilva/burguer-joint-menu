@@ -14,36 +14,36 @@ describe("Login User Service", () => {
   });
 
   it("should be able to login a user", async () => {
-    const email = "test@email.com";
+    const phone = "(01) X2345-6789";
     const password = "123456";
 
-    const createdUser = await usersRepository.create(email, password, false);
-    const loggedUser = await sut.execute({ email, password });
+    const createdUser = await usersRepository.create(phone, password, false);
+    const loggedUser = await sut.execute({ phone, password });
 
     expect(loggedUser).toEqual(createdUser);
   });
 
-  it("should not be able to login with incorrect email", async () => {
-    const email = "test@email.com";
-    const wrongEmail = "wrong@email.com";
+  it("should not be able to login with incorrect phone", async () => {
+    const phone = "(01) X2345-6789";
+    const wrongPhone = "(10) Y2345-6789";
     const password = "123456";
 
-    await usersRepository.create(email, password, false);
+    await usersRepository.create(phone, password, false);
 
     await expect(() =>
-      sut.execute({ email: wrongEmail, password })
+      sut.execute({ phone: wrongPhone, password })
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
   it("should not be able to login with incorrect password", async () => {
-    const email = "test@email.com";
+    const phone = "(01) X2345-6789";
     const password = "123456";
     const wrongPassword = "1@3456";
 
-    await usersRepository.create(email, password, false);
+    await usersRepository.create(phone, password, false);
 
     await expect(() =>
-      sut.execute({ email, password: wrongPassword })
+      sut.execute({ phone, password: wrongPassword })
     ).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 });
