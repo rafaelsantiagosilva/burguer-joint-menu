@@ -1,4 +1,3 @@
-import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { InMemoryOrdersRepository } from "@/repositories/in-memory/in-memory-orders-repository.ts";
 import type IOrdersRepository from "@/repositories/IOrdersRepository.ts";
 import { beforeEach, describe, expect, it } from "vitest";
