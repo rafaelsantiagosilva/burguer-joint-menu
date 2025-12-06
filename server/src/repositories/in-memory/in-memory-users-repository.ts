@@ -28,17 +28,10 @@ export class InMemoryUsersRepository implements IUsersRepository {
     return newUser;
   }
 
-  async addAddressAndName(id: string, address: string, name: string): Promise<void> {
-    const user = this.users.find((user) => user.id === id);
+  async update(user: User): Promise<void> {
+    const userIndex = this.users.findIndex((u) => u.id === user.id);
 
-    if (!user) return;
-
-    const idx = this.users.indexOf(user);
-
-    this.users[idx] = {
-      ...user,
-      address,
-      name,
-    };
+    if (userIndex >= 0)
+      this.users[userIndex] = user;
   }
 }

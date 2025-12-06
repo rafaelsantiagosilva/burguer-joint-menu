@@ -18,6 +18,6 @@ export class AddAddressAndNameUserService {
     if (!user)
       throw new UserAlreadyExistsError();
 
-    await this.usersRepository.addAddressAndName(userId, address, name);
+    await this.usersRepository.update({ ...user, address, name });
   }
 }
