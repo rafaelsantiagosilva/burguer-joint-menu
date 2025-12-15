@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  postgres_test:
+    image: bitnami/postgresql:latest
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=test_burguerjointmenu

@@ -2,7 +2,7 @@
 	// Visit https://aka.ms/tsconfig to read more about this file
 	"compilerOptions": {
 		// File Layout
-		"rootDir": "./src",
+		"rootDir": ".",
 		"outDir": "./dist",
 
 		// Environment Settings
@@ -44,8 +44,10 @@
 		"allowImportingTsExtensions": true,
 		"emitDeclarationOnly": true,
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@/tests/*": ["./tests/*"]
 		}
 	},
+	"include": ["src", "tests"],
 	"exclude": ["drizzle.config.ts"]
 }
