@@ -1,5 +1,4 @@
-import { env } from "@/env.ts";
-import "dotenv/config";
+import { env } from "./env.ts";
 import { drizzle } from "drizzle-orm/node-postgres";
 import * as tables from "@/database/schema/index.ts";
 
@@ -9,12 +8,10 @@ const db = drizzle({
 });
 
 export async function resetDatabase() {
-  console.log("> Reseting database...");
-
-  for (const table of Object.values(tables)) {
-    // @ts-ignore
-    await db.delete(table);
-  }
+  await db.delete(tables.orderProducts);
+  await db.delete(tables.orders);
+  await db.delete(tables.products);
+  await db.delete(tables.users);
 }
 
 export { db };
