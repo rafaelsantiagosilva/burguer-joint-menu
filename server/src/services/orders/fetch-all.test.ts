@@ -3,7 +3,7 @@ import type IOrdersRepository from "@/repositories/IOrdersRepository.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { FetchAllOrdersService } from "./fetch-all.ts";
 
-describe("Fetch Order By User Id Service", () => {
+describe("Fetch Order By User Id Service (Unit)", () => {
   let ordersRepository: IOrdersRepository;
   let sut: FetchAllOrdersService;
 

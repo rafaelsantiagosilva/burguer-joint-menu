@@ -3,7 +3,7 @@ import { comparePassword } from "@/utils/password-hash.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { RegisterUserService } from "./register.ts";
 
-describe("Register User Service", () => {
+describe("Register User Service (Unit)", () => {
   let usersRepository: InMemoryUsersRepository;
   let sut: RegisterUserService;
 

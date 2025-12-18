@@ -4,7 +4,7 @@ import type IProductsRepository from "@/repositories/IProductsRepository.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { CreateProductService } from "./create.ts";
 
-describe("Create Product Service", () => {
+describe("Create Product Service (Unit)", () => {
   let productsRepository: IProductsRepository;
   let sut: CreateProductService;
 

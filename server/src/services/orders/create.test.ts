@@ -12,7 +12,7 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 import { beforeEach, describe, expect, it } from "vitest";
 import { CreateOrderService } from "./create.ts";
 
-describe("Create Order Service", () => {
+describe("Create Order Service (Unit)", () => {
   let ordersRepository: IOrdersRepository;
   let usersRepository: IUsersRepository;
   let productsRepository: IProductsRepository;

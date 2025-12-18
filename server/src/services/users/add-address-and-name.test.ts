@@ -3,7 +3,7 @@ import { AddAddressAndNameUserService } from "./add-address-and-name.ts";
 import type IUsersRepository from "@/repositories/IUsersRepository.ts";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository.ts";
 
-describe("Add Address And Name User Service", () => {
+describe("Add Address And Name User Service (Unit)", () => {
   let usersRepository: IUsersRepository;
   let sut: AddAddressAndNameUserService;
 

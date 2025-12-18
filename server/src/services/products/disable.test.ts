@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { DisableProductService } from "./disable.ts";
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 
-describe("Disable Product Service", () => {
+describe("Disable Product Service (Unit)", () => {
   let productsRepository: IProductsRepository;
   let sut: DisableProductService;
 

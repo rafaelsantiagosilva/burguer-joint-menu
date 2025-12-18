@@ -4,7 +4,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { beforeEach, describe, expect, it } from 'vitest';
 import { LoginUserService } from './login.ts';
 
-describe("Login User Service", () => {
+describe("Login User Service (Unit)", () => {
   let usersRepository: IUsersRepository;
   let sut: LoginUserService;
 

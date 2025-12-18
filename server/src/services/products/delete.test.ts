@@ -4,7 +4,7 @@ import type IProductsRepository from "@/repositories/IProductsRepository.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { DeleteProductService } from "./delete.ts";
 
-describe("Delete Product Service", () => {
+describe("Delete Product Service (Unit)", () => {
   let productsRepository: IProductsRepository;
   let sut: DeleteProductService;
 

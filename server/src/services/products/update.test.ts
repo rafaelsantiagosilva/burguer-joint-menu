@@ -4,7 +4,7 @@ import { InMemoryProductsRepository } from "@/repositories/in-memory/in-memory-p
 import { beforeEach, describe, expect, it } from "vitest";
 import { UpdateProductService } from "./update.ts";
 
-describe("Update Product Service", () => {
+describe("Update Product Service (Unit)", () => {
   let productsRepository: IProductsRepository;
   let sut: UpdateProductService;
 

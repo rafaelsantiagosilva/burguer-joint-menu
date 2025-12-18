@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { GetUserProfileService } from "./get-profile.ts";
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 
-describe("Get User Profile Service", () => {
+describe("Get User Profile Service (Unit)", () => {
   let usersRepository: IUsersRepository;
   let sut: GetUserProfileService;
 

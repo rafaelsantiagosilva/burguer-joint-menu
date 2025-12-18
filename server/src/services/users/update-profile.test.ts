@@ -4,7 +4,7 @@ import type IUsersRepository from "@/repositories/IUsersRepository.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { UpdateUserProfileService } from "./update-profile.ts";
 
-describe("Update User Profile Service", () => {
+describe("Update User Profile Service (Unit)", () => {
   let usersRepository: IUsersRepository;
   let sut: UpdateUserProfileService;
 

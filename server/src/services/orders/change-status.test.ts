@@ -4,7 +4,7 @@ import type IOrdersRepository from "@/repositories/IOrdersRepository.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ChangeOrderStatusService } from "./change-status.ts";
 
-describe("Change Order Status Service", () => {
+describe("Change Order Status Service (Unit)", () => {
   let ordersRepository: IOrdersRepository;
   let sut: ChangeOrderStatusService;
 

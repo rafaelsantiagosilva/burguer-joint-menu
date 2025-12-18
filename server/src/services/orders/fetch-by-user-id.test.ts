@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { FetchOrdersByUserIdService } from "./fetch-by-user-id.ts";
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 
-describe("Fetch Order By User Id Service", () => {
+describe("Fetch Order By User Id Service (Unit)", () => {
   let ordersRepository: IOrdersRepository;
   let usersRepository: IUsersRepository;
   let sut: FetchOrdersByUserIdService;
