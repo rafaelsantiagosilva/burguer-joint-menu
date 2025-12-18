@@ -13,7 +13,7 @@ export class UserRouter {
     this.routes.get("/profile", auth, this.usersController.getProfile.bind(this.usersController));
     this.routes.post("/register", this.usersController.register.bind(this.usersController));
     this.routes.post("/login", this.usersController.login.bind(this.usersController));
-    this.routes.post("/add-name-and-address", auth, this.usersController.addNameAndAddress.bind(this.usersController));
+    this.routes.patch("/add-name-and-address", auth, this.usersController.addNameAndAddress.bind(this.usersController));
     this.routes.put("/update-profile", auth, this.usersController.updateProfile.bind(this.usersController));
   }
 }
