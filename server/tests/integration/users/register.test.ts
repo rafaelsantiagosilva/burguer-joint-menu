@@ -1,15 +1,22 @@
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository.ts";
+import { DrizzleUsersRepository } from "@/repositories/drizzle/drizzle-users-repository.ts";
 import { comparePassword } from "@/utils/password-hash.ts";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import { RegisterUserService } from "@/services/users/register.ts";
+import { resetDatabase } from "@/tests/setup/db.ts";
 
-describe("Register User Service", () => {
-  let usersRepository: InMemoryUsersRepository;
+describe("Register User Service (Integration)", () => {
+  let usersRepository: DrizzleUsersRepository;
   let sut: RegisterUserService;
 
-  beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository();
+  beforeEach(async () => {
+    await resetDatabase();
+
+    usersRepository = new DrizzleUsersRepository();
     sut = new RegisterUserService(usersRepository);
+  });
+
+  afterAll(async () => {
+    await resetDatabase();
   });
 
   it("should to be able register a new user", async () => {
