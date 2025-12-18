@@ -4,7 +4,7 @@ import { GetUserProfileService } from "@/services/users/get-profile.ts";
 import { resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-describe("Get User Profile Service (Unit)", () => {
+describe("Get User Profile Service (Integration)", () => {
   let usersRepository: DrizzleUsersRepository;
   let sut: GetUserProfileService;
 

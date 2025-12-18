@@ -3,7 +3,7 @@ import { AddAddressAndNameUserService } from "@/services/users/add-address-and-n
 import { resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-describe("Add Address And Name User Service (Unit)", () => {
+describe("Add Address And Name User Service (Integration)", () => {
   let usersRepository: DrizzleUsersRepository;
   let sut: AddAddressAndNameUserService;
 

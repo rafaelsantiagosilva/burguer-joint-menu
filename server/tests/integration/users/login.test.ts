@@ -4,7 +4,7 @@ import { LoginUserService } from '@/services/users/login.ts';
 import { resetDatabase } from '@/tests/setup/db.ts';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 
-describe("Login User Service (Unit)", () => {
+describe("Login User Service (Integration)", () => {
   let usersRepository: DrizzleUsersRepository;
   let sut: LoginUserService;
 
