@@ -4,7 +4,7 @@ import { CreateProductService } from "@/services/products/create.ts";
 import { resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-describe("Create Product Service (Unit)", () => {
+describe("Create Product Service (Integration)", () => {
   let productsRepository: DrizzleProductsRepository;
   let sut: CreateProductService;
 

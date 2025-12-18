@@ -4,7 +4,7 @@ import { DisableProductService } from "@/services/products/disable.ts";
 import { resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-describe("Disable Product Service (Unit)", () => {
+describe("Disable Product Service (Integration)", () => {
   let productsRepository: DrizzleProductsRepository;
   let sut: DisableProductService;
 
