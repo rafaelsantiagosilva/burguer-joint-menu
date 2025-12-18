@@ -1,15 +1,22 @@
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { DrizzleProductsRepository } from "@/repositories/drizzle/drizzle-products-repository.ts";
 import { DeleteProductService } from "@/services/products/delete.ts";
-import { beforeEach, describe, expect, it } from "vitest";
+import { resetDatabase } from "@/tests/setup/db.ts";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Delete Product Service (Unit)", () => {
   let productsRepository: DrizzleProductsRepository;
   let sut: DeleteProductService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await resetDatabase();
+
     productsRepository = new DrizzleProductsRepository();
     sut = new DeleteProductService(productsRepository);
+  });
+
+  afterAll(async () => {
+    await resetDatabase();
   });
 
   it("should be able to delete an product", async () => {

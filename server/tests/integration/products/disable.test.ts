@@ -1,15 +1,22 @@
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { DrizzleProductsRepository } from "@/repositories/drizzle/drizzle-products-repository.ts";
 import { DisableProductService } from "@/services/products/disable.ts";
-import { beforeEach, describe, expect, it } from "vitest";
+import { resetDatabase } from "@/tests/setup/db.ts";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Disable Product Service (Unit)", () => {
   let productsRepository: DrizzleProductsRepository;
   let sut: DisableProductService;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await resetDatabase();
+
     productsRepository = new DrizzleProductsRepository();
     sut = new DisableProductService(productsRepository);
+  });
+
+  afterAll(async () => {
+    await resetDatabase();
   });
 
   it("should be able to disable a product", async () => {
