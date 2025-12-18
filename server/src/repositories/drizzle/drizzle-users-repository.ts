@@ -6,15 +6,23 @@ import { eq } from 'drizzle-orm';
 
 export class DrizzleUsersRepository implements IUsersRepository {
   async findById(id: string): Promise<User | null> {
-    const data = await db.select().from(usersTable).where(eq(usersTable.id, id));
-    const user = data[0] || null;
-    return user;
+    try {
+      const data = await db.select().from(usersTable).where(eq(usersTable.id, id));
+      const user = data[0] || null;
+      return user;
+    } catch {
+      return null;
+    }
   }
 
   async findByPhone(phone: string): Promise<User | null> {
-    const data = await db.select().from(usersTable).where(eq(usersTable.phone, phone));
-    const user = data[0] || null;
-    return user;
+    try {
+      const data = await db.select().from(usersTable).where(eq(usersTable.phone, phone));
+      const user = data[0] || null;
+      return user;
+    } catch {
+      return null;
+    }
   }
 
   async create(phone: string, password: string, isAdmin: boolean): Promise<User> {
