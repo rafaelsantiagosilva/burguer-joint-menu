@@ -1,17 +1,17 @@
 import { InvalidCredentialsError } from '@/errors/InvalidCredentialsError.ts';
 import { DrizzleUsersRepository } from '@/repositories/drizzle/drizzle-users-repository.ts';
 import { LoginUserService } from '@/services/users/login.ts';
-import { resetDatabase } from '@/tests/setup/db.ts';
+import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 
-describe("Login User Service (Integration)", () => {
+describe("Login User Service (Unit)", () => {
   let usersRepository: DrizzleUsersRepository;
   let sut: LoginUserService;
 
   beforeEach(async () => {
     await resetDatabase();
 
-    usersRepository = new DrizzleUsersRepository();
+    usersRepository = new DrizzleUsersRepository(db);
     sut = new LoginUserService(usersRepository);
   });
 

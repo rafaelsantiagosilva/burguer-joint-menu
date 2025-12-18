@@ -1,4 +1,4 @@
-import { db } from "@/database/index.ts";
+import { type DrizzleDatabase } from "@/database/index.ts";
 import { orderProducts as orderProductsTable } from "@/database/schema/order_products.ts";
 import { orders as ordersTable } from "@/database/schema/orders.ts";
 import type { Order, OrderStatus } from "@/models/order.ts";
@@ -6,19 +6,21 @@ import { desc, eq } from "drizzle-orm";
 import type IOrdersRepository from "../IOrdersRepository.ts";
 
 export class DrizzleOrdersRepository implements IOrdersRepository {
+  constructor(private readonly db: DrizzleDatabase) { }
+
   async findById(id: string): Promise<Order | null> {
-    const result = await db.select().from(ordersTable).where(eq(ordersTable, id));
+    const result = await this.db.select().from(ordersTable).where(eq(ordersTable, id));
     const order = result[0] ?? null;
     return order;
   }
 
   async fetchAll(): Promise<Order[]> {
-    const result = await db.select().from(ordersTable).orderBy(desc(ordersTable.date));
+    const result = await this.db.select().from(ordersTable).orderBy(desc(ordersTable.date));
     return result;
   }
 
   async fetchByUserId(userId: string, page: number): Promise<Order[]> {
-    const result = await db.select().from(ordersTable).where(eq(ordersTable.userId, userId))
+    const result = await this.db.select().from(ordersTable).where(eq(ordersTable.userId, userId))
       .limit(10).offset((page - 1) * 10)
       .orderBy(desc(ordersTable.date));
 
@@ -35,12 +37,12 @@ export class DrizzleOrdersRepository implements IOrdersRepository {
     for (const product of items)
       totalPrice += product.productPrice * product.quantity;
 
-    const result = await db.insert(ordersTable).values({ userId, totalPrice }).returning();
+    const result = await this.db.insert(ordersTable).values({ userId, totalPrice }).returning();
     const order = result[0];
 
     if (order) {
       for (const product of items)
-        await db.insert(orderProductsTable)
+        await this.db.insert(orderProductsTable)
           .values({ orderId: order!.id, productId: product.productId, productQuantity: product.quantity });
     }
 
@@ -48,6 +50,6 @@ export class DrizzleOrdersRepository implements IOrdersRepository {
   }
 
   async changeStatus(orderId: string, status: OrderStatus): Promise<void> {
-    await db.update(ordersTable).set({ status }).where(eq(ordersTable.id, orderId));
+    await this.db.update(ordersTable).set({ status }).where(eq(ordersTable.id, orderId));
   }
 }

@@ -1,7 +1,7 @@
 import { InvalidProductPriceError } from "@/errors/InvalidProductPriceError.ts";
 import { DrizzleProductsRepository } from "@/repositories/drizzle/drizzle-products-repository.ts";
 import { CreateProductService } from "@/services/products/create.ts";
-import { resetDatabase } from "@/tests/setup/db.ts";
+import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Create Product Service (Integration)", () => {
@@ -11,7 +11,7 @@ describe("Create Product Service (Integration)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    productsRepository = new DrizzleProductsRepository();
+    productsRepository = new DrizzleProductsRepository(db);
     sut = new CreateProductService(productsRepository);
   });
 

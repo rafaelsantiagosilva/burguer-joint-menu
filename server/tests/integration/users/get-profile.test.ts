@@ -1,7 +1,7 @@
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { DrizzleUsersRepository } from "@/repositories/drizzle/drizzle-users-repository.ts";
 import { GetUserProfileService } from "@/services/users/get-profile.ts";
-import { resetDatabase } from "@/tests/setup/db.ts";
+import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Get User Profile Service (Integration)", () => {
@@ -11,7 +11,7 @@ describe("Get User Profile Service (Integration)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    usersRepository = new DrizzleUsersRepository();
+    usersRepository = new DrizzleUsersRepository(db);
     sut = new GetUserProfileService(usersRepository);
   });
 

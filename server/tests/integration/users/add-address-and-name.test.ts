@@ -1,6 +1,6 @@
 import { DrizzleUsersRepository } from "@/repositories/drizzle/drizzle-users-repository.ts";
 import { AddAddressAndNameUserService } from "@/services/users/add-address-and-name.ts";
-import { resetDatabase } from "@/tests/setup/db.ts";
+import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Add Address And Name User Service (Integration)", () => {
@@ -10,7 +10,7 @@ describe("Add Address And Name User Service (Integration)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    usersRepository = new DrizzleUsersRepository();
+    usersRepository = new DrizzleUsersRepository(db);
     sut = new AddAddressAndNameUserService(usersRepository);
   });
 

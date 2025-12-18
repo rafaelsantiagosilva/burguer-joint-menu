@@ -1,7 +1,7 @@
 import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { DrizzleProductsRepository } from "@/repositories/drizzle/drizzle-products-repository.ts";
 import { UpdateProductService } from "@/services/products/update.ts";
-import { resetDatabase } from "@/tests/setup/db.ts";
+import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Update Product Service (Integration)", () => {
@@ -11,7 +11,7 @@ describe("Update Product Service (Integration)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    productsRepository = new DrizzleProductsRepository();
+    productsRepository = new DrizzleProductsRepository(db);
     sut = new UpdateProductService(productsRepository);
   });
 

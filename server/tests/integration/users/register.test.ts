@@ -1,8 +1,8 @@
 import { DrizzleUsersRepository } from "@/repositories/drizzle/drizzle-users-repository.ts";
+import { RegisterUserService } from "@/services/users/register.ts";
+import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { comparePassword } from "@/utils/password-hash.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
-import { RegisterUserService } from "@/services/users/register.ts";
-import { resetDatabase } from "@/tests/setup/db.ts";
 
 describe("Register User Service (Integration)", () => {
   let usersRepository: DrizzleUsersRepository;
@@ -11,7 +11,7 @@ describe("Register User Service (Integration)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    usersRepository = new DrizzleUsersRepository();
+    usersRepository = new DrizzleUsersRepository(db);
     sut = new RegisterUserService(usersRepository);
   });
 
