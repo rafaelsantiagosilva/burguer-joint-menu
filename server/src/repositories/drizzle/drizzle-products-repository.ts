@@ -1,7 +1,7 @@
 import { type DrizzleDatabase } from "@/database/index.ts";
 import { products as productsTable } from "@/database/schema/products.ts";
 import type { Product } from "@/models/product.ts";
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, eq, inArray } from "drizzle-orm";
 import type IProductsRepository from "../IProductsRepository.ts";
 
 export class DrizzleProductsRepository implements IProductsRepository {
@@ -23,14 +23,7 @@ export class DrizzleProductsRepository implements IProductsRepository {
   }
 
   async fetchManyByIds(ids: string[]): Promise<Product[]> {
-    let condition = "";
-
-    for (let i = 0; i < ids.length; i++) {
-      condition += `${productsTable.id} = ${ids[i]}`;
-      condition += (i != ids.length - 1 ? " OR " : "");
-    }
-
-    const products = await this.db.select().from(productsTable).where(sql`${condition}`);
+    const products = await this.db.select().from(productsTable).where(inArray(productsTable.id, ids));
 
     return products;
   }
