@@ -18,8 +18,14 @@ export class UsersController {
 
     const getUserProfileService = new GetUserProfileService(this.usersRepository);
 
-    const userProfile = await getUserProfileService.execute({ userId });
-    return res.status(StatusCodes.ACCEPTED).send(userProfile);
+    const { name, address, phone, isAdmin } = await getUserProfileService.execute({ userId });
+    return res.status(StatusCodes.ACCEPTED)
+      .send({
+        name,
+        address,
+        phone,
+        isAdmin
+      });
   }
 
   async register(req: Request, res: Response) {
