@@ -27,8 +27,10 @@ describe("Get User Profile Service (Integration)", () => {
   });
 
   it("should not be able to get user profile with invalid user id", async () => {
+    const inexistingUserId = crypto.randomUUID();
+
     await expect(() =>
-      sut.execute({ userId: "invalid-id" }))
+      sut.execute({ userId: inexistingUserId }))
       .rejects
       .toBeInstanceOf(ResourceNotFoundError);
   });

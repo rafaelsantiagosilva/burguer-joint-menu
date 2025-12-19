@@ -13,13 +13,9 @@ export class DrizzleProductsRepository implements IProductsRepository {
   }
 
   async findById(id: string): Promise<Product | null> {
-    try {
-      const result = await this.db.select().from(productsTable).where(eq(productsTable.id, id));
-      const product = result[0] ?? null;
-      return product;
-    } catch {
-      return null;
-    }
+    const result = await this.db.select().from(productsTable).where(eq(productsTable.id, id));
+    const product = result[0] ?? null;
+    return product;
   }
 
   async fetchManyByIds(ids: string[]): Promise<Product[]> {

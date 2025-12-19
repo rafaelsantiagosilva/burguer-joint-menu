@@ -30,8 +30,10 @@ describe("Active Product Service (Integration)", () => {
   });
 
   it("should not be able to active a product that does not exist", async () => {
+    const inexistingProductId = crypto.randomUUID();
+
     await expect(async () =>
-      await sut.execute({ id: "product-1" })
+      await sut.execute({ id: inexistingProductId })
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

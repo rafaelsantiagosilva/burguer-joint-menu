@@ -47,9 +47,11 @@ describe("Update Product Service (Integration)", () => {
   });
 
   it("should not be able to update a non-existing product", async () => {
+    const inexistingProductId = crypto.randomUUID();
+
     await expect(async () =>
       await sut.execute({
-        id: "non-existing-product",
+        id: inexistingProductId,
         name: "Updated Product",
         price: 20,
         isAvaliable: false,

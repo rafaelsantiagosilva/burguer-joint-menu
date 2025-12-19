@@ -70,10 +70,11 @@ describe("Create Order Service (Integration)", () => {
 
   it("should not be able to create an order for a non-existing user", async () => {
     const { existingProductsIds } = await mockValues(usersRepository, productsRepository);
+    const inexistingUserId = crypto.randomUUID();
 
     await expect(async () =>
       await sut.execute({
-        userId: "non-existing-user",
+        userId: inexistingUserId,
         items: [
           { productId: existingProductsIds[0]!, productPrice: 10, quantity: 2 },
         ],
@@ -83,12 +84,13 @@ describe("Create Order Service (Integration)", () => {
 
   it("should not be able to create an order with a non-existing product", async () => {
     const { existingUserId } = await mockValues(usersRepository, productsRepository);
+    const inexistingProductId = crypto.randomUUID();
 
     await expect(async () =>
       await sut.execute({
         userId: existingUserId,
         items: [
-          { productId: crypto.randomUUID(), productPrice: 10, quantity: 2 },
+          { productId: inexistingProductId, productPrice: 10, quantity: 2 },
 
         ],
       })

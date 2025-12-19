@@ -37,9 +37,11 @@ describe("Update User Profile Service (Integration)", () => {
   });
 
   it("should not be able to update an inexistent user profile", async () => {
+    const inexistingUserId = crypto.randomUUID();
+
     await expect(() =>
       sut.execute({
-        id: "invalid-id",
+        id: inexistingUserId,
         name: "John Doe",
         address: "123 Main St",
         phone: "(01) X2345-6789",

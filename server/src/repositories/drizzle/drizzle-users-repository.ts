@@ -8,23 +8,15 @@ export class DrizzleUsersRepository implements IUsersRepository {
   constructor(private readonly db: DrizzleDatabase) { }
 
   async findById(id: string): Promise<User | null> {
-    try {
-      const data = await this.db.select().from(usersTable).where(eq(usersTable.id, id));
-      const user = data[0] || null;
-      return user;
-    } catch {
-      return null;
-    }
+    const data = await this.db.select().from(usersTable).where(eq(usersTable.id, id));
+    const user = data[0] || null;
+    return user;
   }
 
   async findByPhone(phone: string): Promise<User | null> {
-    try {
-      const data = await this.db.select().from(usersTable).where(eq(usersTable.phone, phone));
-      const user = data[0] || null;
-      return user;
-    } catch {
-      return null;
-    }
+    const data = await this.db.select().from(usersTable).where(eq(usersTable.phone, phone));
+    const user = data[0] || null;
+    return user;
   }
 
   async create(phone: string, password: string, isAdmin: boolean): Promise<User> {

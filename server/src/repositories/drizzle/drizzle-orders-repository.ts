@@ -8,13 +8,9 @@ export class DrizzleOrdersRepository implements IOrdersRepository {
   constructor(private readonly db: DrizzleDatabase) { }
 
   async findById(id: string): Promise<Order | null> {
-    try {
-      const result = await this.db.select().from(ordersTable).where(eq(ordersTable.id, id));
-      const order = result[0] ?? null;
-      return order;
-    } catch {
-      return null;
-    }
+    const result = await this.db.select().from(ordersTable).where(eq(ordersTable.id, id));
+    const order = result[0] ?? null;
+    return order;
   }
 
   async fetchAll(): Promise<Order[]> {

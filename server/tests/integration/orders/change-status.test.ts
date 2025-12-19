@@ -33,8 +33,10 @@ describe("Change Order Status Service (Integration)", () => {
   });
 
   it("should not be able to change order status if order not found", async () => {
+    const inexistingOrderId = crypto.randomUUID();
+
     await expect(() =>
-      sut.execute({ id: "order-1", newStatus: "WAY" })
+      sut.execute({ id: inexistingOrderId, newStatus: "WAY" })
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
