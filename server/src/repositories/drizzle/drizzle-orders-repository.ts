@@ -1,6 +1,5 @@
 import { type DrizzleDatabase } from "@/database/index.ts";
-import { orderProducts as orderProductsTable } from "@/database/schema/order_products.ts";
-import { orders as ordersTable } from "@/database/schema/orders.ts";
+import { orders as ordersTable, orderProducts as orderProductsTable } from "@/database/schema/index.ts";
 import type { Order, OrderStatus } from "@/models/order.ts";
 import { desc, eq } from "drizzle-orm";
 import type IOrdersRepository from "../IOrdersRepository.ts";
@@ -9,9 +8,13 @@ export class DrizzleOrdersRepository implements IOrdersRepository {
   constructor(private readonly db: DrizzleDatabase) { }
 
   async findById(id: string): Promise<Order | null> {
-    const result = await this.db.select().from(ordersTable).where(eq(ordersTable, id));
-    const order = result[0] ?? null;
-    return order;
+    try {
+      const result = await this.db.select().from(ordersTable).where(eq(ordersTable.id, id));
+      const order = result[0] ?? null;
+      return order;
+    } catch {
+      return null;
+    }
   }
 
   async fetchAll(): Promise<Order[]> {
