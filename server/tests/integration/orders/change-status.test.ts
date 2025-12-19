@@ -5,7 +5,7 @@ import { ChangeOrderStatusService } from "@/services/orders/change-status.ts";
 import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-describe("Change Order Status Service (Unit)", () => {
+describe("Change Order Status Service (Integration)", () => {
   let ordersRepository: DrizzleOrdersRepository;
   let usersRepository: DrizzleUsersRepository;
   let sut: ChangeOrderStatusService;
