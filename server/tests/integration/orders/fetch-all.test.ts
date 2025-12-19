@@ -6,7 +6,7 @@ import { resetDatabase } from "@/tests/setup/db.ts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { makeOrdersTestsRepositories } from "./utils/make-orders-tests-repositories.ts";
 
-describe("Fetch Order By User Id Service (Unit)", () => {
+describe("Fetch Order By User Id Service (Integration)", () => {
   let ordersRepository: DrizzleOrdersRepository;
   let usersRepository: DrizzleUsersRepository;
   let productsRepository: DrizzleProductsRepository;
