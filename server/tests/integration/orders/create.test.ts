@@ -9,6 +9,7 @@ import { DrizzleUsersRepository } from "@/repositories/drizzle/drizzle-users-rep
 import { CreateOrderService } from "@/services/orders/create.ts";
 import { db, resetDatabase } from "@/tests/setup/db.ts";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
+import { makeOrdersTestsRepositories } from "./utils/make-orders-tests-repositories.ts";
 
 describe("Create Order Service (Integration)", () => {
   let ordersRepository: DrizzleOrdersRepository;
@@ -19,11 +20,11 @@ describe("Create Order Service (Integration)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    const repositoriesMocks = await mockRepositories();
+    const mockedRepositories = makeOrdersTestsRepositories();
 
-    ordersRepository = repositoriesMocks.ordersRepository;
-    usersRepository = repositoriesMocks.usersRepository;
-    productsRepository = repositoriesMocks.productsRepository;
+    ordersRepository = mockedRepositories.ordersRepository;
+    usersRepository = mockedRepositories.usersRepository;
+    productsRepository = mockedRepositories.productsRepository;
 
     sut = new CreateOrderService(ordersRepository, usersRepository, productsRepository);
   });
@@ -156,18 +157,6 @@ describe("Create Order Service (Integration)", () => {
     ).rejects.toBeInstanceOf(InvalidProductPriceError);
   });
 });
-
-async function mockRepositories() {
-  const ordersRepository = new DrizzleOrdersRepository(db);
-  const usersRepository = new DrizzleUsersRepository(db);
-  const productsRepository = new DrizzleProductsRepository(db);
-
-  return {
-    ordersRepository,
-    usersRepository,
-    productsRepository,
-  }
-}
 
 async function mockValues(
   usersRepository: DrizzleUsersRepository,
