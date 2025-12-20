@@ -141,7 +141,93 @@ describe("User (E2E)", () => {
     });
   });
 
-  // describe("PATCH /users/add-name-and-address", () => { });
+  describe("PATCH /users/add-name-and-address", () => {
+    it("should be able to update user name and address", async () => {
+      const user = await usersRepository.create("(01) X2345-6789", "123456", false);
+      const token = makeJwt(user.id);
+
+      const response = await request(app).patch("/users/add-name-and-address")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "John Doe",
+          address: "123 Main St",
+          neighborhood: "Downtown",
+          homeNumber: "010",
+          complement: "Ap 100"
+        });
+
+      const updatedUser = await usersRepository.findById(user.id);
+
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
+      expect(updatedUser).toEqual(expect.objectContaining({
+        name: "John Doe",
+        address: "123 Main St, Downtown, 010, Ap 100",
+      }));
+    });
+
+    it("should not be able to update name and address of a inexisting user", async () => {
+      const invalidUserId = crypto.randomUUID();
+      const token = makeJwt(invalidUserId);
+
+      const response = await request(app).patch("/users/add-name-and-address")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "John Doe",
+          address: "123 Main St",
+          neighborhood: "Downtown",
+          homeNumber: "010",
+          complement: "Ap 100"
+        });
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    });
+
+    it("should not be able to update name and address without a token", async () => {
+      await usersRepository.create("(01) X2345-6789", "123456", false);
+
+      const response = await request(app).patch("/users/add-name-and-address")
+        .send({
+          name: "John Doe",
+          address: "123 Main St",
+          neighborhood: "Downtown",
+          homeNumber: "010",
+          complement: "Ap 100"
+        });
+
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    });
+
+    it("should not be able to update name and address with an invalid token", async () => {
+      await usersRepository.create("(01) X2345-6789", "123456", false);
+
+      const response = await request(app).patch("/users/add-name-and-address")
+        .set("Authorization", `Bearer invalid-token`)
+        .send({
+          name: "John Doe",
+          address: "123 Main St",
+          neighborhood: "Downtown",
+          homeNumber: "010",
+          complement: "Ap 100"
+        });
+
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    });
+
+    it("should not be able to update name and address with one or more invalid fields", async () => {
+      const user = await usersRepository.create("(01) X2345-6789", "123456", false);
+      const token = makeJwt(user.id);
+
+      const response = await request(app).patch("/users/add-name-and-address")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          address: "123 Main St",
+          homeNumber: "010",
+          complement: "Ap 100"
+        });
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+  });
 
   // describe("PUT /users/update-profile", () => { });
 });
