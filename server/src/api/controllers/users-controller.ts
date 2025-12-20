@@ -73,12 +73,7 @@ export class UsersController {
     } = bodySchema.parse(req.body);
 
     const addAddressAndNameService = new AddAddressAndNameUserService(this.usersRepository);
-
-    const userAddress = `
-      ${address},
-      ${neighborhood},
-      ${homeNumber} ${complement ? `, ${complement}` : ""}
-    `.trim();
+    const userAddress = `${address}, ${neighborhood}, ${homeNumber}${complement ? `, ${complement}` : ""}`;
 
     await addAddressAndNameService.execute({ userId: req.userId, address: userAddress, name });
     res.status(StatusCodes.NO_CONTENT).end();
