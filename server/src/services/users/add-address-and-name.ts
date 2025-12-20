@@ -1,3 +1,4 @@
+import { ResourceNotFoundError } from "@/errors/ResourceNotFoundError.ts";
 import { UserAlreadyExistsError } from "@/errors/UserAlreadyExistsError.ts";
 import type IUsersRepository from "@/repositories/IUsersRepository.ts";
 
@@ -16,7 +17,7 @@ export class AddAddressAndNameUserService {
     const user = await this.usersRepository.findById(userId);
 
     if (!user)
-      throw new UserAlreadyExistsError();
+      throw new ResourceNotFoundError();
 
     await this.usersRepository.update({ ...user, address, name });
   }
