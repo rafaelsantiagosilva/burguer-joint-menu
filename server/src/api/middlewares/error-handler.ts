@@ -9,7 +9,7 @@ export function errorHandler(
   Request: Request,
   res: Response,
   next: NextFunction) {
-  if (env.ENV === "dev") {
+  if (env.ENV === "dev" || env.ENV === "test") {
     console.info("> ❌ Error handler:");
     console.error(error);
     console.log("\n");

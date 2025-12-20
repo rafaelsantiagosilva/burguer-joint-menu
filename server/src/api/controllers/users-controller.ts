@@ -5,9 +5,9 @@ import { GetUserProfileService } from "@/services/users/get-profile.ts";
 import { LoginUserService } from "@/services/users/login.ts";
 import { RegisterUserService } from "@/services/users/register.ts";
 import { UpdateUserProfileService } from "@/services/users/update-profile.ts";
+import { makeJwt } from "@/utils/make-jwt.ts";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import jwt from "jsonwebtoken";
 import { z } from "zod";
 
 export class UsersController {
@@ -19,7 +19,7 @@ export class UsersController {
     const getUserProfileService = new GetUserProfileService(this.usersRepository);
 
     const { name, address, phone, isAdmin } = await getUserProfileService.execute({ userId });
-    return res.status(StatusCodes.ACCEPTED)
+    return res.status(StatusCodes.OK)
       .send({
         name,
         address,
@@ -51,7 +51,7 @@ export class UsersController {
     const loginService = new LoginUserService(this.usersRepository);
 
     const { id } = await loginService.execute({ phone, password });
-    const token = jwt.sign({ id }, env.JWT_SECRET, { expiresIn: '1h' });
+    const token = makeJwt(id);
 
     res.status(StatusCodes.OK).send({ token });
   }
