@@ -44,7 +44,7 @@ export class UsersController {
   async login(req: Request, res: Response) {
     const bodySchema = z.object({
       phone: z.string(),
-      password: z.string().min(6)
+      password: z.string()
     });
 
     const { phone, password } = bodySchema.parse(req.body);
