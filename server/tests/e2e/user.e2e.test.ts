@@ -54,7 +54,41 @@ describe("User (E2E)", () => {
     });
   });
 
-  // describe("POST /users/register", () => { });
+  describe("POST /users/register", () => {
+    it("should be able to register a new user", async () => {
+      const response = await request(app).post("/users/register").send({
+        phone: "(01) X2345-6789",
+        password: "123456"
+      });
+
+      expect(response.status).toBe(StatusCodes.CREATED);
+    });
+
+    it("should not be able to register a new user with same phone", async () => {
+      const samePhone = "(01) X2345-6789";
+
+      await request(app).post("/users/register").send({
+        phone: samePhone,
+        password: "123456"
+      });
+
+      const response = await request(app).post("/users/register").send({
+        phone: samePhone,
+        password: "123456"
+      });
+
+      expect(response.status).toBe(StatusCodes.CONFLICT);
+    });
+
+    it("should not be able to register a new user with one or more invalid fields", async () => {
+      const response = await request(app).post("/users/register").send({
+        phone: "(01) X2345-6789",
+        password: "123" // minimum password length is 6
+      });
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    });
+  });
 
   // describe("POST /users/login", () => { });
 
