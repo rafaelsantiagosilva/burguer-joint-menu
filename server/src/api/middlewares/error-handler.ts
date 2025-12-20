@@ -10,9 +10,9 @@ export function errorHandler(
   res: Response,
   next: NextFunction) {
   if (env.ENV === "dev" || env.ENV === "test") {
-    console.info("> ❌ Error handler:");
+    const icon = env.ENV === "dev" ? "❌" : "🧪";
+    console.info("> ", icon, " Error handler:");
     console.error(error);
-    console.log("\n");
   }
 
   if (error instanceof ZodError) {
