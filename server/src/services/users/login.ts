@@ -1,6 +1,7 @@
 import { InvalidCredentialsError } from "@/errors/InvalidCredentialsError.ts";
 import type { User } from "@/models/user.ts";
 import type IUsersRepository from "@/repositories/IUsersRepository.ts";
+import { comparePassword } from "@/utils/password-hash.ts";
 
 type LoginUserRequest = {
   phone: string;
@@ -15,7 +16,7 @@ export class LoginUserService {
   async execute({ phone, password }: LoginUserRequest): Promise<LoginUserResponse> {
     const user = await this.usersRepository.findByPhone(phone);
 
-    if (!user || user.password !== password)
+    if (!user || !(await comparePassword(password, user.password)))
       throw new InvalidCredentialsError();
 
     return user;

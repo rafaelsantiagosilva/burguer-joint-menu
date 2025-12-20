@@ -2,9 +2,10 @@ import { InvalidCredentialsError } from '@/errors/InvalidCredentialsError.ts';
 import { DrizzleUsersRepository } from '@/repositories/drizzle/drizzle-users-repository.ts';
 import { LoginUserService } from '@/services/users/login.ts';
 import { db, resetDatabase } from "@/tests/setup/db.ts";
+import { hashPassword } from '@/utils/password-hash.ts';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 
-describe("Login User Service (Unit)", () => {
+describe("Login User Service (Integration)", () => {
   let usersRepository: DrizzleUsersRepository;
   let sut: LoginUserService;
 
@@ -23,7 +24,7 @@ describe("Login User Service (Unit)", () => {
     const phone = "(01) X2345-6789";
     const password = "123456";
 
-    const createdUser = await usersRepository.create(phone, password, false);
+    const createdUser = await usersRepository.create(phone, await hashPassword(password), false);
     const loggedUser = await sut.execute({ phone, password });
 
     expect(loggedUser).toEqual(createdUser);
@@ -34,7 +35,7 @@ describe("Login User Service (Unit)", () => {
     const wrongPhone = "(10) Y2345-6789";
     const password = "123456";
 
-    await usersRepository.create(phone, password, false);
+    await usersRepository.create(phone, await hashPassword(password), false);
 
     await expect(() =>
       sut.execute({ phone: wrongPhone, password })
@@ -46,7 +47,7 @@ describe("Login User Service (Unit)", () => {
     const password = "123456";
     const wrongPassword = "1@3456";
 
-    await usersRepository.create(phone, password, false);
+    await usersRepository.create(phone, await hashPassword(password), false);
 
     await expect(() =>
       sut.execute({ phone, password: wrongPassword })
