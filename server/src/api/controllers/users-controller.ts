@@ -56,7 +56,7 @@ export class UsersController {
     res.status(StatusCodes.OK).send({ token });
   }
 
-  async addNameAndAddress(req: Request, res: Response) {
+  async addAddressAndName(req: Request, res: Response) {
     const bodySchema = z.object({
       name: z.string(),
       address: z.string(),

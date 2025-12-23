@@ -141,12 +141,12 @@ describe("User (E2E)", () => {
     });
   });
 
-  describe("PATCH /users/add-name-and-address", () => {
+  describe("PATCH /users/add-address-and-name", () => {
     it("should be able to update user name and address", async () => {
       const user = await usersRepository.create("(01) X2345-6789", "123456", false);
       const token = makeJwt(user.id);
 
-      const response = await request(app).patch("/users/add-name-and-address")
+      const response = await request(app).patch("/users/add-address-and-name")
         .set("Authorization", `Bearer ${token}`)
         .send({
           name: "John Doe",
@@ -169,7 +169,7 @@ describe("User (E2E)", () => {
       const invalidUserId = crypto.randomUUID();
       const token = makeJwt(invalidUserId);
 
-      const response = await request(app).patch("/users/add-name-and-address")
+      const response = await request(app).patch("/users/add-address-and-name")
         .set("Authorization", `Bearer ${token}`)
         .send({
           name: "John Doe",
@@ -185,7 +185,7 @@ describe("User (E2E)", () => {
     it("should not be able to update name and address without a token", async () => {
       await usersRepository.create("(01) X2345-6789", "123456", false);
 
-      const response = await request(app).patch("/users/add-name-and-address")
+      const response = await request(app).patch("/users/add-address-and-name")
         .send({
           name: "John Doe",
           address: "123 Main St",
@@ -200,7 +200,7 @@ describe("User (E2E)", () => {
     it("should not be able to update name and address with an invalid token", async () => {
       await usersRepository.create("(01) X2345-6789", "123456", false);
 
-      const response = await request(app).patch("/users/add-name-and-address")
+      const response = await request(app).patch("/users/add-address-and-name")
         .set("Authorization", `Bearer invalid-token`)
         .send({
           name: "John Doe",
@@ -217,7 +217,7 @@ describe("User (E2E)", () => {
       const user = await usersRepository.create("(01) X2345-6789", "123456", false);
       const token = makeJwt(user.id);
 
-      const response = await request(app).patch("/users/add-name-and-address")
+      const response = await request(app).patch("/users/add-address-and-name")
         .set("Authorization", `Bearer ${token}`)
         .send({
           address: "123 Main St",
@@ -229,5 +229,77 @@ describe("User (E2E)", () => {
     });
   });
 
-  // describe("PUT /users/update-profile", () => { });
+  describe("PUT /users/update-profile", () => {
+    it("should be able to update user profile", async () => {
+      const user = await usersRepository.create("(01) X2345-6789", "123456", false);
+      const token = makeJwt(user.id);
+
+      const response = await request(app).put("/users/update-profile")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "John Doe",
+          phone: "(01) X2345-6789",
+          password: "123456",
+          address: "123 Main St, Downtown, 010, Ap 100",
+          isAdmin: true
+        });
+
+      const updatedUser = await usersRepository.findById(user.id);
+
+      expect(response.status).toBe(StatusCodes.NO_CONTENT);
+      expect(updatedUser).toEqual(expect.objectContaining({
+        name: "John Doe",
+        address: "123 Main St, Downtown, 010, Ap 100",
+        isAdmin: true
+      }));
+    });
+
+    it("should not be able to update profile of a inexisting user", async () => {
+      const invalidUserId = crypto.randomUUID();
+      const token = makeJwt(invalidUserId);
+
+      const response = await request(app).put("/users/update-profile")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "John Doe",
+          phone: "(01) X2345-6789",
+          password: "123456",
+          address: "123 Main St, Downtown, 010, Ap 100",
+          isAdmin: true
+        });
+
+      expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    });
+
+    it("should not be able to update profile without a token", async () => {
+      await usersRepository.create("(01) X2345-6789", "123456", false);
+
+      const response = await request(app).put("/users/update-profile")
+        .send({
+          name: "John Doe",
+          phone: "(01) X2345-6789",
+          password: "123456",
+          address: "123 Main St, Downtown, 010, Ap 100",
+          isAdmin: true
+        });
+
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    });
+
+    it("should not be able to update profile with an invalid token", async () => {
+      await usersRepository.create("(01) X2345-6789", "123456", false);
+
+      const response = await request(app).put("/users/update-profile")
+        .set("Authorization", `Bearer invalid-token`)
+        .send({
+          name: "John Doe",
+          phone: "(01) X2345-6789",
+          password: "123456",
+          address: "123 Main St, Downtown, 010, Ap 100",
+          isAdmin: true
+        });
+
+      expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    });
+  });
 });
