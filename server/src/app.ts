@@ -1,6 +1,7 @@
 import cors from "cors";
 import type { Express } from "express";
 import express from "express";
+import path from "path";
 import swaggerUi from "swagger-ui-express";
 import { errorHandler } from "./api/middlewares/error-handler.ts";
 import { registerRouters } from "./api/routers/index.ts";
@@ -10,6 +11,13 @@ const app: Express = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.use(
+  "/products/images",
+  express.static(
+    path.resolve(__dirname, "..", "public", "products", "images")
+  )
+);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
