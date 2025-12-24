@@ -1,11 +1,8 @@
-import { env } from "./env.ts";
-import { drizzle } from "drizzle-orm/node-postgres";
+import { makeDb } from "@/database/index.ts";
 import * as tables from "@/database/schema/index.ts";
+import { env } from "./env.ts";
 
-const db = drizzle({
-  connection: env.DATABASE_URL,
-  casing: "snake_case"
-});
+const db = makeDb(env.DATABASE_URL);
 
 export async function resetDatabase() {
   await db.delete(tables.orderProducts);
