@@ -6,10 +6,10 @@ import { ZodError } from "zod";
 
 export function errorHandler(
   error: AppError,
-  Request: Request,
+  _: Request,
   res: Response,
   next: NextFunction) {
-  if (env.ENV === "dev" || env.ENV === "test") {
+  if (env.ENV === "dev" /* || env.ENV === "test" */) {
     const icon = env.ENV === "dev" ? "❌" : "🧪";
     console.info("> ", icon, " Error handler:");
     console.error(error);
