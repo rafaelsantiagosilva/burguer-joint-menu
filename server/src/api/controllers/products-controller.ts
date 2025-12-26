@@ -6,11 +6,10 @@ import { DisableProductService } from "@/services/products/disable.ts";
 import { GetProductByIdService } from "@/services/products/get-by-id.ts";
 import { ListProductsService } from "@/services/products/list.ts";
 import { UpdateProductService } from "@/services/products/update.ts";
+import { deleteLocalFile } from "@/utils/delete-local-file.ts";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
-import { uploadSingleAsync } from "../middlewares/upload.ts";
-import { deleteLocalFile } from "@/utils/delete-local-file.ts";
 
 const paramsSchema = z.object({ id: z.uuid() });
 
@@ -35,18 +34,43 @@ export class ProductsController {
 
     const { name, description, price } = bodySchema.parse(req.body);
 
-    if (!req.file)
-      return res.status(StatusCodes.BAD_REQUEST).json({ message: "Image is required" });
-
     const createProductService = new CreateProductService(this.productsRepository);
     await createProductService.execute({
       name,
       description,
       price,
-      imagePath: `/public/products/images/${req.file.filename}`
+      imagePath: null
     });
 
     return res.status(StatusCodes.CREATED).end();
+  }
+
+  async upload(req: Request, res: Response) {
+    if (!req.file)
+      return res.status(StatusCodes.BAD_REQUEST).json({ message: "No file uploaded" });
+
+    const { id } = paramsSchema.parse(req.params);
+
+    const getProductByIdService = new GetProductByIdService(this.productsRepository);
+    const product = await getProductByIdService.execute({ productId: id });
+
+    if (!product)
+      return res.status(StatusCodes.NOT_FOUND).json({ message: "Product not found" });
+
+    if (product.imagePath)
+      await deleteLocalFile(product.imagePath);
+
+    const imagePath = `/public/products/images/${req.file.filename}`;
+
+    const updateProductService = new UpdateProductService(this.productsRepository);
+    await updateProductService.execute({
+      ...product,
+      imagePath,
+    });
+
+    return res.status(StatusCodes.OK).json({
+      imagePath
+    });
   }
 
   async delete(req: Request, res: Response) {
@@ -87,17 +111,12 @@ export class ProductsController {
     const getProductByIdService = new GetProductByIdService(this.productsRepository);
     const product = await getProductByIdService.execute({ productId: id });
 
-    if (req.file) {
-      await uploadSingleAsync("image")(req, res);
-      await deleteLocalFile(product.imagePath!);
-    }
-
     const updateProductService = new UpdateProductService(this.productsRepository);
     await updateProductService.execute({
       id,
       name,
       description,
-      imagePath: req.file?.filename ?? product.imagePath,
+      imagePath: product.imagePath,
       price,
       isAvaliable
     });

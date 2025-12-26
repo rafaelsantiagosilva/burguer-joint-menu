@@ -6,8 +6,10 @@ import swaggerUi from "swagger-ui-express";
 import { errorHandler } from "./api/middlewares/error-handler.ts";
 import { registerRouters } from "./api/routers/index.ts";
 import { swaggerSpec } from "./swagger.ts";
+import { getDirname } from "./utils/get-dirname.ts";
 
 const app: Express = express();
+const { __dirname } = getDirname(import.meta.url);
 
 app.use(express.json());
 app.use(cors());

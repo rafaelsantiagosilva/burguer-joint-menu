@@ -1,3 +1,4 @@
+import { upload } from "@/api/middlewares/upload.ts";
 import type IProductsRepository from "@/repositories/IProductsRepository.ts";
 import { Router } from "express";
 import { ProductsController } from "../controllers/products-controller.ts";
@@ -13,6 +14,7 @@ export class ProductRouter {
 
     this.routes.patch("/active/:id", auth, adminVerify, this.productsController.active.bind(this.productsController));
     this.routes.post("/create", auth, adminVerify, this.productsController.create.bind(this.productsController));
+    this.routes.post("/upload/:id", auth, adminVerify, upload.single("image"), this.productsController.upload.bind(this.productsController));
     this.routes.delete("/delete/:id", auth, adminVerify, this.productsController.delete.bind(this.productsController));
     this.routes.patch("/disable/:id", auth, adminVerify, this.productsController.disable.bind(this.productsController));
     this.routes.get("/list", auth, this.productsController.list.bind(this.productsController));

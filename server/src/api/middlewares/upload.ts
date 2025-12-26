@@ -1,12 +1,14 @@
 import { InvalidFileFormatError } from "@/errors/InvalidFileFormatError.ts";
+import { getDirname } from "@/utils/get-dirname.ts";
 import crypto from "crypto";
-import type { Request, Response } from "express";
 import multer from "multer";
 import path from "path";
 
+const { __dirname } = getDirname(import.meta.url);
+
 export const upload = multer({
   storage: multer.diskStorage({
-    destination: path.resolve(__dirname, "..", "..", "public", "products", "images"),
+    destination: path.resolve(__dirname, "..", "..", "..", "public", "products", "images"),
     filename: (_req, file, cb) => {
       const fileHash = crypto.randomBytes(16).toString("hex");
       const fileName = `${fileHash}-${file.originalname}`;
@@ -21,15 +23,3 @@ export const upload = multer({
     cb(null, true);
   }
 });
-
-export function uploadSingleAsync(field: string) {
-  return (req: Request, res: Response) => {
-    new Promise<void>((resolve, reject) => {
-      upload.single(field)(req, res, (err) => {
-        if (err)
-          return reject(err);
-        resolve();
-      })
-    });
-  }
-}
