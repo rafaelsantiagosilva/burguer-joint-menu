@@ -3,7 +3,7 @@ import "dotenv/config";
 import { drizzle, NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { Pool } from "pg";
 
-type DrizzleDatabase = NodePgDatabase<Record<string, never>> & { $client: Pool };
+export type DrizzleDatabase = NodePgDatabase<Record<string, never>> & { $client: Pool };
 
 declare global {
   var __DB__: DrizzleDatabase;
