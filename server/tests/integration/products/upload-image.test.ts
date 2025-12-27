@@ -4,9 +4,9 @@ import { UploadProductImageService } from "@/services/products/upload-image.ts";
 import { getDirname } from "@/utils/get-dirname.ts";
 import fs from "fs/promises";
 import path from "path";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
-describe("Upload Image Product Service (Unit)", () => {
+describe("Upload Image Product Service (Integration)", () => {
   let storageProvider: DiskStorageProvider;
   let sut: UploadProductImageService;
 
