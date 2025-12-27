@@ -8,7 +8,6 @@ import { GetProductByIdService } from "@/services/products/get-by-id.ts";
 import { ListProductsService } from "@/services/products/list.ts";
 import { UpdateProductService } from "@/services/products/update.ts";
 import { UploadProductImageService } from "@/services/products/upload-image.ts";
-import { deleteLocalFile } from "@/utils/delete-local-file.ts";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
