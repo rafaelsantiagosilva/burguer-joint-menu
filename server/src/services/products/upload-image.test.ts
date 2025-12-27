@@ -45,7 +45,7 @@ describe("Upload Image Product Service (Unit)", () => {
     const invalidFile = {
       buffer: Buffer.from("fake-pdf"),
       originalname: "doc.pdf",
-      mimetype: "application/opdf"
+      mimetype: "application/pdf"
     };
 
     await expect(sut.execute(invalidFile))
