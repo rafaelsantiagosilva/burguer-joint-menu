@@ -1,3 +1,4 @@
+import { DiskStorageProvider } from "@/providers/disk-storage-provider.ts";
 import type IProductsRepository from "@/repositories/IProductsRepository.ts";
 import { ActiveProductService } from "@/services/products/active.ts";
 import { CreateProductService } from "@/services/products/create.ts";
@@ -6,10 +7,13 @@ import { DisableProductService } from "@/services/products/disable.ts";
 import { GetProductByIdService } from "@/services/products/get-by-id.ts";
 import { ListProductsService } from "@/services/products/list.ts";
 import { UpdateProductService } from "@/services/products/update.ts";
+import { UploadProductImageService } from "@/services/products/upload-image.ts";
 import { deleteLocalFile } from "@/utils/delete-local-file.ts";
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
+
+console.log();
 
 const paramsSchema = z.object({ id: z.uuid() });
 
@@ -57,10 +61,14 @@ export class ProductsController {
     if (!product)
       return res.status(StatusCodes.NOT_FOUND).json({ message: "Product not found" });
 
-    if (product.imagePath)
-      await deleteLocalFile(product.imagePath);
+    const storageProvider = new DiskStorageProvider();
 
-    const imagePath = `/public/products/images/${req.file.filename}`;
+    if (product.imagePath)
+      await storageProvider.delete(product.imagePath);
+
+    const uploadProductImageService = new UploadProductImageService(storageProvider);
+
+    const imagePath = await uploadProductImageService.execute(req.file);
 
     const updateProductService = new UpdateProductService(this.productsRepository);
     await updateProductService.execute({
