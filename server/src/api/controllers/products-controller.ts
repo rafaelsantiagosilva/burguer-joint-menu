@@ -12,8 +12,6 @@ import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 
-console.log();
-
 const paramsSchema = z.object({ id: z.uuid() });
 
 export class ProductsController {
