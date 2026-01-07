@@ -115,7 +115,7 @@ export class ProductsController {
   async update(req: Request, res: Response) {
     const bodySchema = z.object({
       name: z.string(),
-      description: z.string(),
+      description: z.string().nullable(),
       price: z.number().positive(),
       isAvaliable: z.boolean(),
     });
