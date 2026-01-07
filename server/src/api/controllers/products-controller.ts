@@ -96,6 +96,15 @@ export class ProductsController {
     res.status(StatusCodes.NO_CONTENT).end();
   }
 
+  async getById(req: Request, res: Response) {
+    const { id } = paramsSchema.parse(req.params);
+
+    const getProductByIdService = new GetProductByIdService(this.productsRepository);
+    const product = await getProductByIdService.execute({ productId: id });
+
+    return res.status(StatusCodes.OK).json(product);
+  }
+
   async list(_req: Request, res: Response) {
     const listProductsService = new ListProductsService(this.productsRepository);
     const products = await listProductsService.execute();
