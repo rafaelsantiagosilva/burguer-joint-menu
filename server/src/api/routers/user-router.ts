@@ -15,5 +15,8 @@ export class UserRouter {
     this.routes.post("/login", this.usersController.login.bind(this.usersController));
     this.routes.patch("/add-address-and-name", auth, this.usersController.addAddressAndName.bind(this.usersController));
     this.routes.put("/update-profile", auth, this.usersController.updateProfile.bind(this.usersController));
+
+    // TODO: add route to get yourself orders
+
   }
 }

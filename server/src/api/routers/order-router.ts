@@ -18,7 +18,7 @@ export class OrderRouter {
     this.ordersController = new OrdersController(this.ordersRepository, this.usersRepository, this.productsRepository);
 
     this.routes.patch("/status/:id", auth, adminVerify, this.ordersController.changeStatus.bind(this.ordersController));
-    this.routes.post("/create", auth, adminVerify, this.ordersController.create.bind(this.ordersController));
+    this.routes.post("/create", auth, this.ordersController.create.bind(this.ordersController));
     this.routes.get("/", auth, adminVerify, this.ordersController.fetchAll.bind(this.ordersController));
     this.routes.get("/user", auth, adminVerify, this.ordersController.fetchByUserId.bind(this.ordersController))
   }
