@@ -54,7 +54,7 @@ describe("Order (E2E) - POST /orders/create", () => {
     expect(response.status).toBe(StatusCodes.CREATED);
   });
 
-  it("should not be able to change order status with a invalid token", async () => {
+  it("should not be able to create an order with a invalid token", async () => {
     const customer = await usersRepository.create("(00) 0000-0000", "customer", false);
     const newOrder = await ordersRepository.create(customer.id, []);
 
