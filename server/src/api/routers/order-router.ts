@@ -20,6 +20,6 @@ export class OrderRouter {
     this.routes.patch("/status/:id", auth, adminVerify, this.ordersController.changeStatus.bind(this.ordersController));
     this.routes.post("/create", auth, this.ordersController.create.bind(this.ordersController));
     this.routes.get("/", auth, adminVerify, this.ordersController.fetchAll.bind(this.ordersController));
-    this.routes.get("/user", auth, adminVerify, this.ordersController.fetchByUserId.bind(this.ordersController))
+    this.routes.get("/user/:userId/:page", auth, adminVerify, this.ordersController.fetchByUserId.bind(this.ordersController))
   }
 }

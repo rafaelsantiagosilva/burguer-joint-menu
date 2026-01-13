@@ -71,10 +71,11 @@ export class OrdersController {
 
   async fetchByUserId(req: Request, res: Response) {
     const paramsSchema = z.object({
-      page: z.number()
+      userId: z.uuid(),
+      page: z.coerce.number()
     });
 
-    const { page } = paramsSchema.parse(req.params);
+    const { userId, page } = paramsSchema.parse(req.params);
 
     const fetchOrdersByUserIdService = new FetchOrdersByUserIdService(
       this.ordersRepository,
@@ -82,7 +83,7 @@ export class OrdersController {
     );
 
     const orders = await fetchOrdersByUserIdService.execute({
-      userId: req.userId,
+      userId,
       page
     });
 
