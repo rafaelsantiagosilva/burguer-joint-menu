@@ -1,5 +1,7 @@
 import { env } from "@/env.ts";
+import type IOrdersRepository from "@/repositories/IOrdersRepository.ts";
 import type IUsersRepository from "@/repositories/IUsersRepository.ts";
+import { FetchOrdersByUserIdService } from "@/services/orders/fetch-by-user-id.ts";
 import { AddAddressAndNameUserService } from "@/services/users/add-address-and-name.ts";
 import { GetUserProfileService } from "@/services/users/get-profile.ts";
 import { LoginUserService } from "@/services/users/login.ts";
@@ -11,7 +13,7 @@ import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 
 export class UsersController {
-  constructor(private usersRepository: IUsersRepository) { }
+  constructor(private usersRepository: IUsersRepository, private ordersRepository: IOrdersRepository) { }
 
   async getProfile(req: Request, res: Response) {
     const { userId } = req;
@@ -26,6 +28,21 @@ export class UsersController {
         phone,
         isAdmin
       });
+  }
+
+  async getOrders(req: Request, res: Response) {
+    const paramsSchema = z.object({
+      page: z.coerce.number()
+    });
+
+    const { userId } = req;
+    const { page } = paramsSchema.parse(req.params);
+
+    const fetchOrdersByUserId = new FetchOrdersByUserIdService(this.ordersRepository, this.usersRepository);
+
+    const orders = await fetchOrdersByUserId.execute({ userId, page });
+
+    return res.status(StatusCodes.OK).send(orders);
   }
 
   async register(req: Request, res: Response) {
