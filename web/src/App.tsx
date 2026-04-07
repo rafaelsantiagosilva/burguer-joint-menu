@@ -1,9 +1,9 @@
-function App() {
+import { Header } from "./layout/Header";
+
+export default function App() {
   return (
     <>
-      <h1 >Hello World</h1>
+      <Header />
     </>
   )
 }
-
-export default App
