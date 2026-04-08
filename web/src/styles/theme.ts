@@ -4,5 +4,9 @@ export const defaultTheme = {
         red: {
             500: "#e03636"
         }
+    },
+    fontFamily: {
+        patrickHand: "\"Patrick Hand\", sans-serif",
+        rockSalt: "\"Rock Salt\", cursive", 
     }
 }
