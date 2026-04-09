@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Hero } from "../components/Hero";
-import { MenuSection } from "../components/MenuSection";
+import * as S from "./styles";
 
 export const Route = createFileRoute("/")({
     component: HomePage
@@ -9,8 +8,13 @@ export const Route = createFileRoute("/")({
 function HomePage() {
     return (
         <>
-            <Hero />
-            <MenuSection />
+            <S.Hero>
+                <h1>Hambúrgueres que fazem história, <br /> um bite de cada vez!</h1>
+            </S.Hero>
+            
+            <S.Menu>
+                <h1>Cardápio</h1>
+            </S.Menu>
         </>
     )
 }
