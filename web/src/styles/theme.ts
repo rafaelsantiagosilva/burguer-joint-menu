@@ -2,7 +2,8 @@ export const defaultTheme = {
     colors: {
         white: "#f1f1f1",
         red: {
-            500: "#e03636"
+            500: "#e03636",
+            800: "#5f1919"
         }
     },
     fontFamily: {
