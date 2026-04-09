@@ -1,11 +1,45 @@
 import { createFileRoute } from "@tanstack/react-router";
 import * as S from "./styles";
+import { useState } from "react";
+import { Card } from "../components/Card";
 
 export const Route = createFileRoute("/")({
     component: HomePage
 });
 
 function HomePage() {
+    type ProductType = {
+        name: string;
+        description: string;
+        price: number;
+        image: string;
+    }
+
+    const [products, setProducts] = useState<ProductType[]>([
+        {
+            name: "Burguer Clássico",
+            description: "Pão, carne, queijo, alface, tomate e molho especial.",
+            price: 2999,
+            image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyJTIwY2xhc3NpY298ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+        },
+        {
+            name: "Burguer Clássico",
+            description: "Pão, carne, queijo, alface, tomate e molho especial.",
+            price: 2999,
+            image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyJTIwY2xhc3NpY298ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+        },{
+            name: "Burguer Clássico",
+            description: "Pão, carne, queijo, alface, tomate e molho especial.",
+            price: 2999,
+            image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyJTIwY2xhc3NpY298ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+        },{
+            name: "Burguer Clássico",
+            description: "Pão, carne, queijo, alface, tomate e molho especial.",
+            price: 2999,
+            image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyJTIwY2xhc3NpY298ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+        },
+    ]);
+
     return (
         <>
             <S.Hero>
@@ -16,65 +50,16 @@ function HomePage() {
                 <h1>Cardápio</h1>
 
                 <div className="cards">
-                    <section className="card">
-                        <img className="card_image" src="https://www.assai.com.br/sites/default/files/shutterstock_1806472312.jpg"
-                            alt="Classic Burger"
+                    {products.length === 0 && <p className="no_products">Ainda não há produtos cadastrados :(</p> }
+                    {products.length > 0 && products.map((product) => (
+                        <Card
+                            key={product.name}
+                            productName={product.name}
+                            productDescription={product.description}
+                            productPrice={product.price}
+                            productImage={product.image}
                         />
-
-                        <h2>Burguer Clássico</h2>
-                        <main>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quasi voluptas ipsum est. Itaque blanditiis quae, dolorum natus excepturi eius aut minus.
-                        </main>
-
-                        <footer className="card_footer">
-                            <p className="price">R$ 29,90</p>
-                            <button>Adicionar</button>
-                        </footer>
-                    </section>
-
-                    <section className="card">
-                        <img className="card_image" src="https://www.assai.com.br/sites/default/files/shutterstock_1806472312.jpg"
-                            alt="Classic Burger"
-                        />
-
-                        <h2>Burguer Clássico</h2>
-                        <main>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quasi voluptas ipsum est. Itaque blanditiis quae, dolorum natus excepturi eius aut minus.
-                        </main>
-
-                        <footer className="card_footer">
-                            <p className="price">R$ 29,90</p>
-                            <button>Adicionar</button>
-                        </footer>
-                    </section><section className="card">
-                        <img className="card_image" src="https://www.assai.com.br/sites/default/files/shutterstock_1806472312.jpg"
-                            alt="Classic Burger"
-                        />
-
-                        <h2>Burguer Clássico</h2>
-                        <main>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quasi voluptas ipsum est. Itaque blanditiis quae, dolorum natus excepturi eius aut minus.
-                        </main>
-
-                        <footer className="card_footer">
-                            <p className="price">R$ 29,90</p>
-                            <button>Adicionar</button>
-                        </footer>
-                    </section><section className="card">
-                        <img className="card_image" src="https://www.assai.com.br/sites/default/files/shutterstock_1806472312.jpg"
-                            alt="Classic Burger"
-                        />
-
-                        <h2>Burguer Clássico</h2>
-                        <main>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quasi voluptas ipsum est. Itaque blanditiis quae, dolorum natus excepturi eius aut minus.
-                        </main>
-
-                        <footer className="card_footer">
-                            <p className="price">R$ 29,90</p>
-                            <button>Adicionar</button>
-                        </footer>
-                    </section>
+                    ))}
                 </div>
             </S.Menu>
         </>

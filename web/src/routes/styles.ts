@@ -37,44 +37,7 @@ export const Menu = styled.section`
     width: 100%;
   }
 
-  .card {
-    width: 20rem;
-    border-radius: 0.5rem;
-    transition: scale 100ms;
-  }
-
-  .card:hover {
-    scale: 1.02;
-  }
-
-  .card_footer {
-      margin-top: 0.8rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
-
-  .card_footer > p {
-    font-size: 1.4rem;
-    font-weight: bold;
-  }
-
-  .card_footer > button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: ${(props) => props.theme.colors.red[500]};
-    color: ${(props) => props.theme.colors.white};
-    border-radius: 5px;
-    transition: color 100ms, background-color 100ms;
-    cursor: pointer;
-  }
-
-  .card_footer > button:hover {
-    background-color: ${(props) => props.theme.colors.red[600]};
-  }
-
-  .card_image {
-      width: 100%;
-      border-radius: 0.5rem;
+  .cards > .no_products {
+    font-size: 2rem;
   }
 `;
