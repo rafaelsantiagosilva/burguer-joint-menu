@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { Header } from "../layout/Header";
 import { GlobalStyles } from "../styles/global";
 import { defaultTheme } from "../styles/theme";
+import { Footer } from "../layout/Footer";
 
 export const Route = createRootRoute({
     component: RootComponent
@@ -16,6 +17,7 @@ function RootComponent() {
                 <GlobalStyles />
                 <Header />
                 <Outlet />
+                <Footer />
             </ThemeProvider>
         </StrictMode>
     )
