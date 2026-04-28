@@ -1,19 +1,18 @@
 import * as S from "./styles";
 
-type ButtonProps = {
+type ButtonProps = React.ComponentProps<"button"> & {
     label: string;
-    onClick: () => void;
+    onClick?: () => void;
     variant?: "md" | "lg";
 }
 
-export function Button({ label, onClick, variant="md" }: ButtonProps) {
+export function Button({ label, onClick, variant="md", ...rest }: ButtonProps) {
     const fontSizes: Record<typeof variant, string> = {
         "md": "1rem",
         "lg": "1.5rem"
     }
 
-
-    return <S.Container onClick={onClick} style={{fontSize: fontSizes[variant] }}>
+    return <S.Container onClick={onClick} style={{fontSize: fontSizes[variant] }} {...rest}>
         {label}
     </S.Container>
 }

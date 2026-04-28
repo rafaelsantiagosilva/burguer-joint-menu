@@ -14,7 +14,6 @@ export const Container = styled.main`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
   font-size: 1.4rem;
@@ -31,5 +30,13 @@ export const Form = styled.form`
   & .link {
     color: ${({theme}) => theme.colors.red[500]};
     text-decoration: underline;
+  }
+
+  .input-error {
+    color: ${({theme}) => theme.colors.white};
+    background-color: ${({theme}) => theme.colors.red[500]};
+    padding: 0.2rem 0.5rem;
+    border: 2px solid ${({theme}) => theme.colors.red[800]};
+    border-radius: 5px;
   }
 `;
