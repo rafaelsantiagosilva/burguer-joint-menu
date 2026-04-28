@@ -1,6 +1,7 @@
 import * as S from "./styles";
 import { LogIn, ShoppingCart } from "react-feather";
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 export function Header() {
     const [cartItems, setCartItems] = useState([]);
@@ -14,10 +15,10 @@ export function Header() {
     return (
         <S.Container>
             <h1>
-                <a href="#">
+                <Link to="/">
                     🍔
                     Burguer Joint
-                </a>
+                </Link>
             </h1>
 
             <nav>
@@ -32,9 +33,9 @@ export function Header() {
                     </li>
 
                     <li>
-                        <a href="#">
+                        <Link to="/login">
                             <LogIn size={35} />
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>

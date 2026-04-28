@@ -2,6 +2,7 @@ export const defaultTheme = {
     colors: {
         white: "#f1f1f1",
         gray: {
+            600: "#444444",
             900: "#252525",
         },
         red: {
